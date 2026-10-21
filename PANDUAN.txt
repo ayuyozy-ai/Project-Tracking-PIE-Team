@@ -1,0 +1,55 @@
+PI PROJECT MANAGEMENT - PANDUAN INSTALASI PHP/XAMPP
+==================================================
+
+Aplikasi ini berjalan di PC server dengan PHP 8, Apache, dan MySQL dari XAMPP.
+Jangan jalankan server.js atau install-autostart.bat lama untuk versi ini.
+
+1. MENJALANKAN DI PC SERVER
+---------------------------
+1. Buka XAMPP Control Panel, lalu klik Start untuk Apache dan MySQL.
+2. Pastikan database project_tracker sudah dibuat dan schema.sql sudah diimpor.
+3. Periksa kredensial database di config.php bila konfigurasi MySQL berbeda.
+4. Buka http://localhost/ProjectTracker/.
+5. Login dengan akun admin yang telah dibuat. Segera ganti PIN default jika belum diganti.
+
+start.bat dapat digunakan untuk membuka XAMPP Control Panel dan menampilkan petunjuk.
+
+2. MEMBERI AKSES KEPADA PENGGUNA
+--------------------------------
+Admin membuka Pengaturan > Kelola pengguna untuk membuat akun.
+Pilih peran Pengguna untuk akses edit atau Viewer (lihat saja) untuk akses baca.
+Setiap akun memerlukan nama dan PIN; sampaikan PIN awal secara aman.
+
+3. AKSES DARI PC LAIN
+---------------------
+Gunakan IPv4 PC server, misalnya http://10.10.162.47/ProjectTracker/.
+PC pengguna harus dapat merutekan ke jaringan server. Bila keduanya ada di subnet/VLAN berbeda,
+admin jaringan perlu mengizinkan routing antarjaringan.
+
+Windows Firewall di PC server harus mengizinkan Apache menerima TCP port 80 dari jaringan kantor.
+Batasi aturan firewall ke subnet kantor yang memerlukan akses. Jangan membuka port 80 ke internet.
+Akses dari luar kantor hanya melalui VPN tepercaya. Untuk jaringan tidak tepercaya, siapkan HTTPS.
+
+Untuk memeriksa koneksi dari PC pengguna, jalankan:
+    Test-NetConnection ALAMAT-IP-SERVER -Port 80
+
+4. BACKUP DAN DATA
+------------------
+Admin dapat membuat backup dari Pengaturan > Backup sekarang.
+Backup tersimpan di storage/backup. File quotation disimpan di storage/files.
+Salin kedua folder tersebut serta backup database MySQL sebelum memindahkan server.
+
+Data MySQL aplikasi: project_tracker.
+Skema awal: schema.sql.
+Konfigurasi koneksi: config.php.
+
+5. PEMECAHAN MASALAH
+--------------------
+- Halaman lokal tidak terbuka: pastikan Apache berstatus Running di XAMPP.
+- Error koneksi database: pastikan MySQL Running, database tersedia, dan config.php benar.
+- PC lain timeout: periksa hasil Test-NetConnection, routing subnet/VLAN, dan firewall TCP 80 di server.
+- API menampilkan 401: sesi belum login atau telah berakhir; login kembali.
+- Perubahan belum tersimpan: periksa koneksi Apache/MySQL dan indikator sinkronisasi aplikasi.
+
+Catatan: server.js, config.json, dan sebagian skrip Node di folder ini adalah peninggalan backend lama.
+Backend aktif untuk deployment ini adalah PHP/XAMPP.

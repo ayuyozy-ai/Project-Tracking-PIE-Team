@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Lewati file dan folder yang sudah ada
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Rute app yang berada di subfolder /ProjectTracker
+RewriteRule ^ProjectTracker/?$ /ProjectTracker/index.php [L,QSA]
+RewriteRule ^ProjectTracker/api/(.*)$ /ProjectTracker/api.php [L,QSA]
+RewriteRule ^ProjectTracker/(.*)$ /ProjectTracker/index.php [L,QSA]
